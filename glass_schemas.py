@@ -1,11 +1,21 @@
 import json
+from re import fullmatch, IGNORECASE
+
 import exceptions
 
 
 class Glass:
     def __init__(self, eurocode: str):
+        if not self.is_eurocode_correct(eurocode):
+            raise exceptions.InvalidEurocodeError
         self.car_model, self.car_years = self.get_car_model(eurocode[:4])
         self.glass_type = self.get_glass_type(eurocode[4])
+
+    @staticmethod
+    def is_eurocode_correct(eurocode: str) -> bool:
+        pattern = r'[0-9A-Z]{4}[ABCDEFHMLRT][A-Z]{2}[0-9A-Z]{,8}'
+        result = fullmatch(pattern, eurocode, flags=IGNORECASE)
+        return bool(result)
 
     @staticmethod
     def get_car_model(code: str):

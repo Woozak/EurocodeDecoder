@@ -22,4 +22,5 @@ class Glass:
         with open('glass_codes/glass_types.json', 'r', encoding='utf-8') as file:
             glass_types = json.load(file)
             for side in glass_types:
-                return glass_types[side][code]
+                if code in glass_types[side]:
+                    return glass_types[side][code]

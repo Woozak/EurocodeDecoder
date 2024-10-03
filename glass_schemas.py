@@ -2,14 +2,18 @@ import json
 from re import fullmatch, IGNORECASE
 
 import exceptions
+from glass_codes import windshield, rear_window, side_window
 
 
 class Glass:
     def __init__(self, eurocode: str):
         if not self.is_eurocode_correct(eurocode):
             raise exceptions.InvalidEurocodeError
+        self.eurocode = eurocode
+        self.data = self.get_data(eurocode[4])
         self.car_model, self.car_years = self.get_car_model(eurocode[:4])
         self.glass_type = self.get_glass_type(eurocode[4])
+        self.color = self.get_glass_color(eurocode[5:7])
 
     @staticmethod
     def is_eurocode_correct(eurocode: str) -> bool:
@@ -28,9 +32,21 @@ class Glass:
                 raise exceptions.EurocodeNotFoundError
 
     @staticmethod
-    def get_glass_type(code: str):
-        with open('glass_codes/glass_types.json', 'r', encoding='utf-8') as file:
-            glass_types = json.load(file)
-            for side in glass_types:
-                if code in glass_types[side]:
-                    return glass_types[side][code]
+    def get_data(code: str):
+        if code in 'ACD':
+            return windshield
+        elif code in 'BE':
+            return rear_window
+        elif code in 'FHLMRT':
+            return side_window
+
+    def get_glass_type(self, code: str):
+        glass_type = self.data.type[code]
+        return glass_type
+
+    def get_glass_color(self, code: str):
+        glass_color = self.data.color[code]
+        return glass_color
+
+    def get_characteristics(self, code):
+        pass

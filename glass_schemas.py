@@ -7,20 +7,20 @@ from glass_codes import windshield, rear_window, side_window
 
 class Glass:
     def __init__(self, eurocode: str):
-        if not self.is_eurocode_correct(eurocode):
-            raise exceptions.InvalidEurocodeError
+        self.is_eurocode_correct(eurocode)
+
         self.eurocode = eurocode
         self.data = self.get_data(eurocode[4])
         self.car_model, self.car_years = self.get_car_model(eurocode[:4])
         self.glass_type = self.data.type[eurocode[4]]
         self.color = self.data.color[eurocode[5:7]]
-        self.characteristics = self.get_characteristics(eurocode[9:])
 
     @staticmethod
-    def is_eurocode_correct(eurocode: str) -> bool:
+    def is_eurocode_correct(eurocode: str):
         pattern = r'[0-9A-Z]{4}[ABCDEFHMLRT][A-Z]{2}[0-9A-Z]{,8}'
         result = fullmatch(pattern, eurocode)
-        return bool(result)
+        if not result:
+            raise exceptions.InvalidEurocodeError
 
     @staticmethod
     def get_car_model(code: str):
@@ -41,11 +41,14 @@ class Glass:
         elif code in 'FHLMRT':
             return side_window
 
-    def get_characteristics(self, code: str):
-        result = []
-        pattern = r'[A-Z]*?(?=[1-9])'
-        string = search(pattern, code).group()
-        for char in string:
-            if char in self.data.characteristic:
-                result.append(self.data.characteristic[char])
-        return result
+
+class Windshield(Glass):
+    pass
+
+
+class RearWindow(Glass):
+    pass
+
+
+class SideWindow(Glass):
+    pass

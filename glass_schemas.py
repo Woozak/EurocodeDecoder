@@ -62,24 +62,15 @@ class Windshield(Glass):
         self.characteristics = self.get_characteristics(eurocode[9:] if self.strip_color else eurocode[7:])
 
 
-
-
 class RearWindow(Glass):
     def __init__(self, eurocode: str):
         super().__init__(eurocode)
         self.body_type = self.data.body_type[eurocode[7]]
 
 
-
-
 class SideWindow(Glass):
     def __init__(self, eurocode: str):
         super().__init__(eurocode)
-
-
-
-
-
-glass = RearWindow('4339BGNH')
-
-print(glass.__dict__)
+        self.body_type = self.data.body_type[eurocode[7:9]]
+        self.position = self.data.position[eurocode[9:11]]
+        self.characteristics = self.get_characteristics(eurocode[11:])

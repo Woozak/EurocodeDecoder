@@ -64,9 +64,9 @@ class Glass:
 
     @staticmethod
     def get_modifications(data, code: str) -> str | None:
-        for mod in data.modification:
+        for mod in data:
             if code in mod:
-                return data.modification[mod]
+                return data[mod]
 
 
 class Windshield(Glass):

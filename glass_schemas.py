@@ -1,5 +1,6 @@
 import json
 from re import fullmatch, search
+from pydantic import BaseModel
 
 import exceptions
 from glass_codes import windshield, rear_window, side_window
@@ -92,3 +93,14 @@ class SideWindow(Glass):
         self.body_type = self.get_attribute(self.data.body_type, eurocode[7:9])
         self.position = self.get_attribute(self.data.position, eurocode[9:11])
         self.characteristic = self.get_characteristic(self.data.characteristic, eurocode[11:])
+
+
+class ResponseGlass(BaseModel):
+    eurocode: str
+    glass_type: str
+    color: str
+    strip_color: str | None = None
+    body_type: str | None = None
+    position: str | None = None
+    characteristic: list[str] = []
+    modification: str | None = None

@@ -14,7 +14,7 @@ class Glass:
         self.car_model, self.car_years = self.get_car_model(eurocode[:4])
         self.glass_type = self.data.type[eurocode[4]]
         self.color = self.get_attribute(self.data.color, eurocode[5:7])
-        self.modifications = self.get_modifications(self.data.modification, eurocode[-2:])
+        self.modification = self.get_modification(self.data.modification, eurocode[-2:])
 
     @staticmethod
     def get_data(code: str):
@@ -49,21 +49,21 @@ class Glass:
             raise exceptions.InvalidEurocodeError
 
     @staticmethod
-    def get_characteristics(data, code: str) -> list[str]:
-        characteristics = []
+    def get_characteristic(data, code: str) -> list[str]:
+        characteristic = []
         pattern = r'[^1-9]*'
         string = search(pattern, code).group()
         if len(string) != len(set(string)):
             raise exceptions.InvalidEurocodeError
         for char in string:
             try:
-                characteristics.append(data[char])
+                characteristic.append(data[char])
             except KeyError:
                 raise exceptions.InvalidEurocodeError
-        return characteristics
+        return characteristic
 
     @staticmethod
-    def get_modifications(data, code: str) -> str | None:
+    def get_modification(data, code: str) -> str | None:
         for mod in data:
             if code in mod:
                 return data[mod]
@@ -73,7 +73,7 @@ class Windshield(Glass):
     def __init__(self, eurocode: str):
         super().__init__(eurocode)
         self.strip_color = self.data.strip_color[eurocode[7:9]] if eurocode[7:9] in self.data.strip_color else None
-        self.characteristics = self.get_characteristics(
+        self.characteristic = self.get_characteristic(
             self.data.characteristic,
             eurocode[9:] if self.strip_color else eurocode[7:]
         )
@@ -83,7 +83,7 @@ class RearWindow(Glass):
     def __init__(self, eurocode: str):
         super().__init__(eurocode)
         self.body_type = self.data.body_type[eurocode[7]]
-        self.characteristics = self.get_characteristics(self.data.characteristic, eurocode[8:])
+        self.characteristic = self.get_characteristic(self.data.characteristic, eurocode[8:])
 
 
 class SideWindow(Glass):
@@ -91,7 +91,7 @@ class SideWindow(Glass):
         super().__init__(eurocode)
         self.body_type = self.get_attribute(self.data.body_type, eurocode[7:9])
         self.position = self.get_attribute(self.data.position, eurocode[9:11])
-        self.characteristics = self.get_characteristics(self.data.characteristic, eurocode[11:])
+        self.characteristic = self.get_characteristic(self.data.characteristic, eurocode[11:])
 
 
 glass = Windshield('3566AGNPV')

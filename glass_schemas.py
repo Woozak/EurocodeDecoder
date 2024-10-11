@@ -57,7 +57,7 @@ class Glass:
             raise exceptions.InvalidEurocodeError
         for char in string:
             try:
-                characteristics.append(data.characteristic[char])
+                characteristics.append(data[char])
             except KeyError:
                 raise exceptions.InvalidEurocodeError
         return characteristics
@@ -92,3 +92,8 @@ class SideWindow(Glass):
         self.body_type = self.get_attribute(self.data.body_type, eurocode[7:9])
         self.position = self.get_attribute(self.data.position, eurocode[9:11])
         self.characteristics = self.get_characteristics(self.data.characteristic, eurocode[11:])
+
+
+glass = Windshield('3566AGNPV')
+
+print(glass.__dict__)

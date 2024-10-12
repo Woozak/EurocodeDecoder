@@ -97,6 +97,8 @@ class SideWindow(Glass):
 
 class ResponseGlass(BaseModel):
     eurocode: str
+    car_model: str
+    car_years: str
     glass_type: str
     color: str
     strip_color: str | None = None

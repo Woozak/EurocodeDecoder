@@ -3,6 +3,7 @@ from app.glass_schemas import Windshield, RearWindow, SideWindow
 
 
 def get_glass_info(eurocode: str) -> dict:
+    eurocode = eurocode.upper().strip()
     if eurocode[4] in 'ACD':
         glass = Windshield(eurocode)
     elif eurocode[4] in 'BE':

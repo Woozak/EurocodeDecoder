@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status
 
-from utils import get_glass_info
-from glass_schemas import ResponseGlass
+from app.utils import get_glass_info
+from app.glass_schemas import ResponseGlass
 
 
 app = FastAPI()

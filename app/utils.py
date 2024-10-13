@@ -1,5 +1,5 @@
-import exceptions
-from glass_schemas import Windshield, RearWindow, SideWindow
+from app import exceptions
+from app.glass_schemas import Windshield, RearWindow, SideWindow
 
 
 def get_glass_info(eurocode: str) -> dict:

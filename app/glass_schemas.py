@@ -2,8 +2,8 @@ import json
 from re import fullmatch, search
 from pydantic import BaseModel
 
-import exceptions
-from glass_codes import windshield, rear_window, side_window
+from app import exceptions
+from app.glass_codes import windshield, rear_window, side_window
 
 
 class Glass:
@@ -34,7 +34,7 @@ class Glass:
 
     @staticmethod
     def get_car_model(code: str) -> tuple[str, str]:
-        with open('glass_codes/car_models.json', 'r', encoding='utf-8') as file:
+        with open('app/glass_codes/car_models.json', 'r', encoding='utf-8') as file:
             car_models = json.load(file)
             try:
                 car_model = car_models[code]

@@ -1,0 +1,11 @@
+{
+  "car_model": "Модель авто",
+  "car_years": "Год выпуска",
+  "glass_type": "Тип стекла",
+  "color": "Цвет стекла",
+  "strip_color": "Цвет полосы",
+  "body_type": "Тип кузова",
+  "position": "Место установки",
+  "characteristic": "Характеристики",
+  "modification": "Модификации"
+}

@@ -34,7 +34,7 @@ class Glass:
 
     @staticmethod
     def get_car_model(code: str) -> tuple[str, str]:
-        with open('app/glass_codes/car_models.json', 'r', encoding='utf-8') as file:
+        with open('glass_codes/car_models.json', 'r', encoding='utf-8') as file:
             car_models = json.load(file)
             try:
                 car_model = car_models[code]

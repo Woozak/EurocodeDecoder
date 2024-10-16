@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 def get_eurocode_data(eurocode: str) -> dict:
@@ -9,8 +10,17 @@ def get_eurocode_data(eurocode: str) -> dict:
 
 def decode_eurocode(eurocode: str):
     data = get_eurocode_data(eurocode)
-    glass_info = (f'Модель авто: <b>{data['car_model']}</b>\n'
-                  f'Год выпуска: <b>{data['car_years']}</b>\n'
-                  f'Цвет стекла: <b>{data['color']}</b>\n')
+    with open('translation.json', 'r', encoding='utf-8') as file:
+        translation = json.load(file)
 
-    return glass_info
+    glass_info = []
+    for key, value in data.items():
+        if key == 'eurocode':
+            continue
+        elif key == 'characteristic':
+            string = f'{translation[key]}: <b>{', '.join(value).capitalize()}</b>'
+        else:
+            string = f'{translation[key]}: <b>{value}</b>'
+        glass_info.append(string)
+
+    return '\n'.join(glass_info)

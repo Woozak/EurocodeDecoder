@@ -10,12 +10,10 @@ router = Router()
 
 @router.message(Command(commands=['start']))
 async def start_command(message: Message):
-    await message.answer('')
-
-
-@router.message(Command(commands=['help']))
-async def help_command(message: Message):
-    await message.answer('')
+    welcome_message = (f'👋 Привет!\n'
+                       f'Я бот для расшифровки еврокодов автомобильных стекол.\n'
+                       f'Введите еврокод, чтобы получить информацию о стекле.')
+    await message.answer(text=welcome_message)
 
 
 @router.message()

@@ -27,7 +27,7 @@ def decode_eurocode(eurocode: str) -> str:
             if key == 'eurocode':
                 continue
             elif key == 'characteristic':
-                string = f'{translation[key]}: <b>{', '.join(value).capitalize()}</b>'
+                string = f'{translation[key]}: <b>{', '.join(value)}</b>'
             else:
                 string = f'{translation[key]}: <b>{value}</b>'
             glass_info.append(string)
